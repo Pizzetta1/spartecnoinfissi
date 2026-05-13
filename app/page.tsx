@@ -161,7 +161,7 @@ export default function Home() {
       const rect = hero.getBoundingClientRect();
       const viewportHeight = window.innerHeight;
 
-      if (window.scrollY > 20) setShowScroll(false);
+      if (window.scrollY > 50) setShowScroll(false);
       else setShowScroll(true);
 
       const isMobile = window.innerWidth < 768;
