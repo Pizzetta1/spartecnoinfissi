@@ -166,22 +166,25 @@ export default function Home() {
 
       const isMobile = window.innerWidth < 768;
 
-      // ✅ sticky SOLO desktop
-      if (!isMobile) {
-        if (rect.bottom <= viewportHeight) {
-          hero.style.position = "sticky";
-          hero.style.top = `${viewportHeight - rect.height}px`;
-        } else {
-          hero.style.position = "relative";
-          hero.style.top = "0px";
-        }
-      }
+     // BLOCCO HERO SOLO DESKTOP
+if (window.innerWidth >= 768) {
+  if (rect.bottom <= viewportHeight) {
+    hero.style.position = "sticky";
+    hero.style.top = `${viewportHeight - rect.height}px`;
+  } else {
+    hero.style.position = "relative";
+    hero.style.top = "0px";
+  }
+}
 
       // ✅ parallax SOLO desktop
       if (imageRef.current && !isMobile) {
         const scrollY = window.scrollY;
-        imageRef.current.style.transform =
-          `translate3d(0, ${scrollY * 0.12}px, 0) scale(1.06)`;
+        if (window.innerWidth < 768) {
+  imageRef.current.style.transform = `translateY(${scrollY * 0.08}px) scale(1.1)`;
+} else {
+  imageRef.current.style.transform = `translateY(${scrollY * 0.12}px) scale(1.06)`;
+}
       }
     };
 
@@ -204,7 +207,7 @@ export default function Home() {
         <img
           ref={imageRef}
           src="/hero.png"
-          className="w-full h-[100vh] md:h-[150vh] object-cover object-top"
+          className="w-full h-[120vh] md:h-[150vh] object-cover object-top"
           alt="hero"
         />
 
