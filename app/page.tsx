@@ -70,39 +70,26 @@ function ShowroomSection() {
 
   const x = useTransform(scrollYProgress, [0, 1], ["0%", "-80%"]);
 
+  if (typeof window !== "undefined" && window.innerWidth < 768) {
   return (
-    <div ref={containerRef} className="relative border-t border-black/5" style={{ height: "500vh" }}>
-      <div className="sticky top-0 h-screen overflow-hidden bg-[#F5F5F5]">
+    <div className="px-6 py-24 space-y-16">
+      {rooms.map((room, i) => (
+        <div key={i}>
+          <img
+            src={room.img}
+            className="w-full h-[260px] object-cover rounded-xl mb-6"
+            alt={room.title}
+          />
+          <p className="text-xs text-neutral-400 uppercase mb-2">{room.number}</p>
+          <h2 className="text-2xl font-serif mb-2">{room.title}</h2>
+          <p className="text-neutral-500 mb-4">{room.subtitle}</p>
 
-        <motion.div className="flex h-full" style={{ width: "500%", x }}>
-          {rooms.map((room, i) => (
-            <div key={i} className="flex h-full" style={{ width: "20%" }}>
-
-              <div className="w-[55%] relative overflow-hidden">
-                <img
-                  src={room.img}
-                  className="w-full h-full object-cover"
-                  alt={room.title}
-                />
-              </div>
-
-              <div className="w-[45%] flex flex-col justify-center px-16">
-                <p className="text-xs text-neutral-400 tracking-widest uppercase mb-6">{room.number}</p>
-                <h2 className="text-5xl font-serif mb-6">{room.title}</h2>
-                <p className="text-neutral-500 mb-6">{room.subtitle}</p>
-                <p className="text-neutral-600 mb-10">{room.desc}</p>
-
-                <Link href={room.href} className="group flex items-center gap-3">
-                  <span>{room.cta}</span>
-                  <span className="h-px w-8 bg-black group-hover:w-16 transition-all" />
-                </Link>
-              </div>
-
-            </div>
-          ))}
-        </motion.div>
-
-      </div>
+          <Link href={room.href} className="flex items-center gap-2">
+            <span>{room.cta}</span>
+            <span className="h-px w-6 bg-black" />
+          </Link>
+        </div>
+      ))}
     </div>
   );
 }
@@ -111,6 +98,7 @@ export default function Home() {
   const heroRef = useRef<HTMLElement>(null);
   const imageRef = useRef<HTMLImageElement>(null);
   const [showScroll, setShowScroll] = useState(true);
+const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
 
   useEffect(() => {
     const lenis = new Lenis({
@@ -136,20 +124,22 @@ export default function Home() {
       if (window.scrollY > 50) setShowScroll(false);
       else setShowScroll(true);
 
-      if (rect.bottom <= viewportHeight) {
-        hero.style.position = "sticky";
-        hero.style.top = `${viewportHeight - rect.height}px`;
-      } else {
-        hero.style.position = "relative";
-        hero.style.top = "0px";
-      }
+      if (!isMobile) {
+  if (rect.bottom <= viewportHeight) {
+    hero.style.position = "sticky";
+    hero.style.top = `${viewportHeight - rect.height}px`;
+  } else {
+    hero.style.position = "relative";
+    hero.style.top = "0px";
+  }
+}
 
-      // ✅ PARALLAX SOLO DESKTOP
-      if (imageRef.current && window.innerWidth >= 768) {
-        const scrollY = window.scrollY;
-        imageRef.current.style.transform =
-          `translate3d(0, ${scrollY * 0.12}px, 0) scale(1.06)`;
-      }
+      // PARALLAX HERO
+if (imageRef.current && !isMobile) {
+  const scrollY = window.scrollY;
+  imageRef.current.style.transform =
+    `translate3d(0, ${scrollY * 0.12}px, 0) scale(1.06)`;
+}
     };
 
     window.addEventListener("scroll", handleScroll);
