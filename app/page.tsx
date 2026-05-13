@@ -217,7 +217,7 @@ export default function Home() {
 
             {/* MOBILE FADE SCROLL */}
 <div
-  className={`md:hidden fixed bottom-10 text-white/60 text-xs tracking-widest uppercase transition-opacity duration-500 ${
+  className={`md:hidden fixed bottom-[48px] text-white/60 text-xs tracking-widest uppercase transition-opacity duration-500 ${
     showScroll ? "opacity-100 animate-fadeScroll" : "opacity-0"
   }`}
   style={{
