@@ -166,7 +166,7 @@ export default function Home() {
 
       const isMobile = window.innerWidth < 768;
 
-     // BLOCCO HERO SOLO DESKTOP
+// BLOCCO HERO SOLO DESKTOP
 if (window.innerWidth >= 768) {
   if (rect.bottom <= viewportHeight) {
     hero.style.position = "sticky";
