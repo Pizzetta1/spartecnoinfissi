@@ -138,8 +138,7 @@ export default function ContattiPage() {
                 <div className="mt-10 border-b border-black/10 pb-8">
                   <p className="text-xs tracking-[0.2em] uppercase text-gray-400 mb-2">Orari</p>
                   <p className="text-base font-light text-gray-600 leading-relaxed">
-                    Lunedì – Venerdì: 07:00 – 13:00 / 15:30 – 18:30<br />
-                    Sabato: 07:00 – 13:00
+                    Lunedì – Venerdì: 08:00 – 13:30 / 15:00 – 18:00<br />
                   </p>
                 </div>
               </FadeIn>

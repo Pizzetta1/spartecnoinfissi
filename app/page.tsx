@@ -215,16 +215,22 @@ export default function Home() {
         <div className="absolute top-0 left-0 w-full h-screen flex items-center justify-center text-center text-white px-6">
           <div className="max-w-5xl">
 
-            <div
-              className={`absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/70 transition-opacity duration-500 ${
-                showScroll ? "opacity-100" : "opacity-0"
-              }`}
-            >
-              <div className="w-[22px] h-[36px] border border-white/50 rounded-full flex items-start justify-center p-[4px]">
-                <div className="w-[3px] h-[6px] bg-white/70 rounded-full animate-scroll"></div>
-              </div>
-              <span className="text-[10px] tracking-widest uppercase">Scroll</span>
-            </div>
+            {/* MOBILE FADE SCROLL */}
+<div className="md:hidden absolute bottom-10 left-1/2 -translate-x-1/2 text-white/60 text-xs tracking-widest uppercase animate-fadeScroll">
+  Scorri
+</div>
+
+{/* DESKTOP SCROLL INDICATOR (ORIGINALE) */}
+<div
+  className={`hidden md:flex absolute bottom-10 left-1/2 -translate-x-1/2 flex-col items-center gap-2 text-white/70 transition-opacity duration-500 ${
+    showScroll ? "opacity-100" : "opacity-0"
+  }`}
+>
+  <div className="w-[22px] h-[36px] border border-white/50 rounded-full flex items-start justify-center p-[4px]">
+    <div className="w-[3px] h-[6px] bg-white/70 rounded-full animate-scroll"></div>
+  </div>
+  <span className="text-[10px] tracking-widest uppercase">Scroll</span>
+</div>
 
             <FadeIn>
               <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif leading-[1.02] tracking-[-0.02em]">
