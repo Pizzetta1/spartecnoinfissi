@@ -155,8 +155,9 @@ function ShowroomSection() {
 
 export default function Home() {
   const heroRef = useRef<HTMLElement>(null);
-  const imageRef = useRef<HTMLImageElement>(null);
   const [showScroll, setShowScroll] = useState(true);
+const { scrollY } = useScroll();
+const y = useTransform(scrollY, [0, 800], [0, 120]);
 
   useEffect(() => {
     const lenis = new Lenis({
@@ -181,18 +182,6 @@ export default function Home() {
 
       setShowScroll(window.scrollY <= 50);
 
-      if (rect.bottom <= viewportHeight) {
-        hero.style.position = "sticky";
-        hero.style.top = `${viewportHeight - rect.height}px`;
-      } else {
-        hero.style.position = "relative";
-        hero.style.top = "0px";
-      }
-
-      if (imageRef.current) {
-        const scrollY = window.scrollY;
-        imageRef.current.style.transform = `translateY(${scrollY * 0.12}px) scale(1.06)`;
-      }
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -211,12 +200,12 @@ export default function Home() {
       {/* HERO */}
       <section ref={heroRef} className="relative overflow-hidden">
 
-        <img
-          ref={imageRef}
-          src="/hero.png"
-          className="w-full h-[100vh] md:h-[150vh] object-cover object-top"
-          alt="hero"
-        />
+        <motion.img
+  src="/hero.png"
+  style={{ y }}
+  className="w-full h-[120vh] md:h-[150vh] object-cover object-top"
+  alt="hero"
+/>
 
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/20 to-black/80"></div>
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.08),transparent_60%)]"></div>
