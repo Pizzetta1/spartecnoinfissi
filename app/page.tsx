@@ -161,7 +161,7 @@ export default function Home() {
       const rect = hero.getBoundingClientRect();
       const viewportHeight = window.innerHeight;
 
-      if (window.scrollY > 50) setShowScroll(false);
+      if (window.scrollY > 20) setShowScroll(false);
       else setShowScroll(true);
 
       const isMobile = window.innerWidth < 768;
@@ -216,7 +216,11 @@ export default function Home() {
           <div className="max-w-5xl">
 
             {/* MOBILE FADE SCROLL */}
-<div className="md:hidden absolute bottom-10 left-1/2 -translate-x-1/2 text-white/60 text-xs tracking-widest uppercase animate-fadeScroll">
+<div
+  className={`md:hidden absolute bottom-10 left-1/2 transform -translate-x-1/2 text-white/60 text-xs tracking-widest uppercase transition-opacity duration-500 ${
+    showScroll ? "opacity-100 animate-fadeScroll" : "opacity-0"
+  }`}
+>
   Scorri
 </div>
 
