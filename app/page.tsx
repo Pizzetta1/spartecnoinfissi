@@ -177,17 +177,18 @@ if (window.innerWidth >= 768) {
   }
 }
 
-      // ✅ parallax SOLO desktop
-      if (imageRef.current && !isMobile) {
-        const scrollY = window.scrollY;
-        if (window.innerWidth < 768) {
-  imageRef.current.style.transform = `translateY(${scrollY * 0.08}px) scale(1.1)`;
-} else {
-  imageRef.current.style.transform = `translateY(${scrollY * 0.12}px) scale(1.06)`;
-}
-      }
-    };
+     // ✅ parallax mobile + desktop (corretto)
+if (imageRef.current) {
+  const scrollY = window.scrollY;
 
+  if (window.innerWidth < 768) {
+    // MOBILE (più morbido)
+    imageRef.current.style.transform = `translateY(${scrollY * 0.05}px) scale(1.08)`;
+  } else {
+    // DESKTOP (identico al tuo originale)
+    imageRef.current.style.transform = `translateY(${scrollY * 0.12}px) scale(1.06)`;
+  }
+}
     window.addEventListener("scroll", handleScroll);
 
     return () => {
