@@ -223,9 +223,9 @@ export default function Home() {
 >
   <div className="swipe-clean" />
 
-  <span className="scroll-text-mobile">
-    Scorri
-  </span>
+  <span className="scroll-text-mobile animate-scrollText">
+  Scorri
+</span>
 </div>
 
 {/* DESKTOP SCROLL INDICATOR (ORIGINALE) */}
