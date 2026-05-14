@@ -61,35 +61,15 @@ const rooms = [
 ];
 
 function ShowroomSection() {
-  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
-
-  // ✅ MOBILE VERSION (verticale semplice)
-  if (isMobile) {
-    return (
-      <div className="px-6 py-24 space-y-16">
-        {rooms.map((room, i) => (
-          <div key={i}>
-            <img
-              src={room.img}
-              className="w-full h-[260px] object-cover rounded-xl mb-6"
-              alt={room.title}
-            />
-            <p className="text-xs text-neutral-400 uppercase mb-2">{room.number}</p>
-            <h2 className="text-2xl font-serif mb-2">{room.title}</h2>
-            <p className="text-neutral-500 mb-4">{room.subtitle}</p>
-
-            <Link href={room.href} className="flex items-center gap-2">
-              <span>{room.cta}</span>
-              <span className="h-px w-6 bg-black" />
-            </Link>
-          </div>
-        ))}
-      </div>
-    );
-  }
-
-  // ✅ DESKTOP (IDENTICO)
+  const [isMobile, setIsMobile] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -99,39 +79,69 @@ function ShowroomSection() {
   const x = useTransform(scrollYProgress, [0, 1], ["0%", "-80%"]);
 
   return (
-    <div ref={containerRef} className="relative border-t border-black/5" style={{ height: "500vh" }}>
-      <div className="sticky top-0 h-screen overflow-hidden bg-[#F5F5F5]">
-
-        <motion.div className="flex h-full" style={{ width: "500%", x }}>
+    <>
+      {isMobile ? (
+        // ✅ MOBILE
+        <div className="px-6 py-24 space-y-16">
           {rooms.map((room, i) => (
-            <div key={i} className="flex h-full" style={{ width: "20%" }}>
+            <div key={i}>
+              <img
+                src={room.img}
+                className="w-full h-[260px] object-cover rounded-xl mb-6"
+                alt={room.title}
+              />
+              <p className="text-xs text-neutral-400 uppercase mb-2">{room.number}</p>
+              <h2 className="text-2xl font-serif mb-2">{room.title}</h2>
+              <p className="text-neutral-500 mb-4">{room.subtitle}</p>
 
-              <div className="w-[55%] relative overflow-hidden">
-                <img
-                  src={room.img}
-                  className="w-full h-full object-cover"
-                  alt={room.title}
-                />
-              </div>
-
-              <div className="w-[45%] flex flex-col justify-center px-16">
-                <p className="text-xs text-neutral-400 tracking-widest uppercase mb-6">{room.number}</p>
-                <h2 className="text-5xl font-serif mb-6">{room.title}</h2>
-                <p className="text-neutral-500 mb-6">{room.subtitle}</p>
-                <p className="text-neutral-600 mb-10">{room.desc}</p>
-
-                <Link href={room.href} className="group flex items-center gap-3">
-                  <span>{room.cta}</span>
-                  <span className="h-px w-8 bg-black group-hover:w-16 transition-all" />
-                </Link>
-              </div>
-
+              <Link href={room.href} className="flex items-center gap-2">
+                <span>{room.cta}</span>
+                <span className="h-px w-6 bg-black" />
+              </Link>
             </div>
           ))}
-        </motion.div>
+        </div>
+      ) : (
+        // ✅ DESKTOP (IDENTICO AL TUO)
+        <div
+          ref={containerRef}
+          className="relative border-t border-black/5"
+          style={{ height: "500vh" }}
+        >
+          <div className="sticky top-0 h-screen overflow-hidden bg-[#F5F5F5]">
 
-      </div>
-    </div>
+            <motion.div className="flex h-full" style={{ width: "500%", x }}>
+              {rooms.map((room, i) => (
+                <div key={i} className="flex h-full" style={{ width: "20%" }}>
+
+                  <div className="w-[55%] relative overflow-hidden">
+                    <img
+                      src={room.img}
+                      className="w-full h-full object-cover"
+                      alt={room.title}
+                    />
+                  </div>
+
+                  <div className="w-[45%] flex flex-col justify-center px-16">
+                    <p className="text-xs text-neutral-400 tracking-widest uppercase mb-6">{room.number}</p>
+                    <h2 className="text-5xl font-serif mb-6">{room.title}</h2>
+                    <p className="text-neutral-500 mb-6">{room.subtitle}</p>
+                    <p className="text-neutral-600 mb-10">{room.desc}</p>
+
+                    <Link href={room.href} className="group flex items-center gap-3">
+                      <span>{room.cta}</span>
+                      <span className="h-px w-8 bg-black group-hover:w-16 transition-all" />
+                    </Link>
+                  </div>
+
+                </div>
+              ))}
+            </motion.div>
+
+          </div>
+        </div>
+      )}
+    </>
   );
 }
 
