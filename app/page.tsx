@@ -61,13 +61,9 @@ const rooms = [
 ];
 
 function ShowroomSection() {
-  const [isMobile, setIsMobile] = useState(false);
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
 
-  useEffect(() => {
-    setIsMobile(window.innerWidth < 768);
-  }, []);
-
-  // ✅ MOBILE (verticale)
+  // ✅ MOBILE VERSION (verticale semplice)
   if (isMobile) {
     return (
       <div className="px-6 py-24 space-y-16">
@@ -92,7 +88,7 @@ function ShowroomSection() {
     );
   }
 
-  // ✅ DESKTOP (invariato)
+  // ✅ DESKTOP (IDENTICO)
   const containerRef = useRef<HTMLDivElement>(null);
 
   const { scrollYProgress } = useScroll({
@@ -168,8 +164,10 @@ export default function Home() {
       if (window.scrollY > 50) setShowScroll(false);
       else setShowScroll(true);
 
+      const isMobile = window.innerWidth < 768;
+
       // ✅ sticky SOLO desktop
-      if (window.innerWidth >= 768) {
+      if (!isMobile) {
         if (rect.bottom <= viewportHeight) {
           hero.style.position = "sticky";
           hero.style.top = `${viewportHeight - rect.height}px`;
@@ -179,15 +177,11 @@ export default function Home() {
         }
       }
 
-      // ✅ PARALLAX CORRETTO (mobile + desktop)
-      if (imageRef.current) {
+      // ✅ parallax SOLO desktop
+      if (imageRef.current && !isMobile) {
         const scrollY = window.scrollY;
-
-        if (window.innerWidth < 768) {
-          imageRef.current.style.transform = `translateY(${scrollY * 0.05}px) scale(1.08)`;
-        } else {
-          imageRef.current.style.transform = `translateY(${scrollY * 0.12}px) scale(1.06)`;
-        }
+        imageRef.current.style.transform =
+          `translate3d(0, ${scrollY * 0.12}px, 0) scale(1.06)`;
       }
     };
 
@@ -210,7 +204,7 @@ export default function Home() {
         <img
           ref={imageRef}
           src="/hero.png"
-          className="w-full h-[120vh] md:h-[150vh] object-cover object-top"
+          className="w-full h-[100vh] md:h-[150vh] object-cover object-top"
           alt="hero"
         />
 
@@ -221,27 +215,30 @@ export default function Home() {
         <div className="absolute top-0 left-0 w-full h-screen flex items-center justify-center text-center text-white px-6">
           <div className="max-w-5xl">
 
-            {/* MOBILE SCROLL */}
-            <div
-              className={`md:hidden fixed bottom-[48px] text-white/60 text-xs tracking-widest uppercase transition-opacity duration-500 ${
-                showScroll ? "opacity-100 animate-fadeScroll" : "opacity-0"
-              }`}
-              style={{ left: "50%", transform: "translateX(-50%)" }}
-            >
-              Scorri
-            </div>
+            {/* MOBILE FADE SCROLL */}
+<div
+  className={`md:hidden fixed bottom-10 text-white/60 text-xs tracking-widest uppercase transition-opacity duration-500 ${
+    showScroll ? "opacity-100 animate-fadeScroll" : "opacity-0"
+  }`}
+  style={{
+    left: "50%",
+    transform: "translateX(-50%)",
+  }}
+>
+  Scorri
+</div>
 
-            {/* DESKTOP SCROLL */}
-            <div
-              className={`hidden md:flex absolute bottom-10 left-1/2 -translate-x-1/2 flex-col items-center gap-2 text-white/70 transition-opacity duration-500 ${
-                showScroll ? "opacity-100" : "opacity-0"
-              }`}
-            >
-              <div className="w-[22px] h-[36px] border border-white/50 rounded-full flex items-start justify-center p-[4px]">
-                <div className="w-[3px] h-[6px] bg-white/70 rounded-full animate-scroll"></div>
-              </div>
-              <span className="text-[10px] tracking-widest uppercase">Scroll</span>
-            </div>
+{/* DESKTOP SCROLL INDICATOR (ORIGINALE) */}
+<div
+  className={`hidden md:flex absolute bottom-10 left-1/2 -translate-x-1/2 flex-col items-center gap-2 text-white/70 transition-opacity duration-500 ${
+    showScroll ? "opacity-100" : "opacity-0"
+  }`}
+>
+  <div className="w-[22px] h-[36px] border border-white/50 rounded-full flex items-start justify-center p-[4px]">
+    <div className="w-[3px] h-[6px] bg-white/70 rounded-full animate-scroll"></div>
+  </div>
+  <span className="text-[10px] tracking-widest uppercase">Scroll</span>
+</div>
 
             <FadeIn>
               <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif leading-[1.02] tracking-[-0.02em]">
@@ -264,7 +261,7 @@ export default function Home() {
         </div>
 
       </section>
-      
+
       <div className="relative z-20 bg-[#F5F5F5]">
 
         <section className="py-32 px-6 border-t border-black/5">
