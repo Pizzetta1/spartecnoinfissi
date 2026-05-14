@@ -237,7 +237,7 @@ export default function Home() {
     />
   </svg>
 
-  <div className="swipe-line-mobile" />
+  <div className="swipe-clean" />
 </div>
 
 {/* DESKTOP SCROLL INDICATOR (ORIGINALE) */}
