@@ -215,29 +215,29 @@ export default function Home() {
         <div className="absolute top-0 left-0 w-full h-screen flex items-center justify-center text-center text-white px-6">
           <div className="max-w-5xl">
 
-            {/* MOBILE FADE SCROLL */}
+{/* MOBILE SCROLL (DITO) */}
 <div
-  className={`md:hidden fixed bottom-10 text-white/60 text-xs tracking-widest uppercase transition-opacity duration-500 ${
-    showScroll ? "opacity-100 animate-fadeScroll" : "opacity-0"
-  }`}
-  style={{
-    left: "50%",
-    transform: "translateX(-50%)",
-  }}
->
- <div
   className={`md:hidden fixed bottom-[48px] left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 transition-opacity duration-500 ${
     showScroll ? "opacity-100" : "opacity-0"
   }`}
 >
-  {/* dito */}
-  <div className="finger" />
+  <svg
+    width="36"
+    height="36"
+    viewBox="0 0 24 24"
+    fill="none"
+    className="finger-icon"
+  >
+    <path
+      d="M12 2c.6 0 1 .4 1 1v7h1V5c0-.6.4-1 1-1s1 .4 1 1v6h1V7c0-.6.4-1 1-1s1 .4 1 1v7c0 2.8-2.2 5-5 5h-2c-2.8 0-5-2.2-5-5V9c0-.6.4-1 1-1s1 .4 1 1v2h1V3c0-.6.4-1 1-1z"
+      stroke="white"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
 
-  {/* linea swipe */}
-  <div className="w-[2px] h-6 bg-white/40 overflow-hidden rounded-full">
-    <div className="swipe-line" />
-  </div>
-</div>
+  <div className="swipe-line-mobile" />
 </div>
 
 {/* DESKTOP SCROLL INDICATOR (ORIGINALE) */}
