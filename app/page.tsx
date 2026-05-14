@@ -225,7 +225,19 @@ export default function Home() {
     transform: "translateX(-50%)",
   }}
 >
-  Scorri
+ <div
+  className={`md:hidden fixed bottom-[48px] left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 transition-opacity duration-500 ${
+    showScroll ? "opacity-100" : "opacity-0"
+  }`}
+>
+  {/* dito */}
+  <div className="finger" />
+
+  {/* linea swipe */}
+  <div className="w-[2px] h-6 bg-white/40 overflow-hidden rounded-full">
+    <div className="swipe-line" />
+  </div>
+</div>
 </div>
 
 {/* DESKTOP SCROLL INDICATOR (ORIGINALE) */}
