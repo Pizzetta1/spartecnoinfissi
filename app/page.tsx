@@ -166,21 +166,16 @@ export default function Home() {
 
       const isMobile = window.innerWidth < 768;
 
-    // sticky per desktop + mobile (adattato)
-if (rect.bottom <= viewportHeight) {
-  hero.style.position = "sticky";
-
-  if (window.innerWidth < 768) {
-    // MOBILE → comportamento semplice e fluido
-    hero.style.top = "0px";
-  } else {
-    // DESKTOP → effetto originale
-    hero.style.top = `${viewportHeight - rect.height}px`;
-  }
-} else {
-  hero.style.position = "relative";
-  hero.style.top = "0px";
-}
+      // ✅ sticky SOLO desktop
+      if (!isMobile) {
+        if (rect.bottom <= viewportHeight) {
+          hero.style.position = "sticky";
+          hero.style.top = `${viewportHeight - rect.height}px`;
+        } else {
+          hero.style.position = "relative";
+          hero.style.top = "0px";
+        }
+      }
 
       // ✅ parallax SOLO desktop
       if (imageRef.current && !isMobile) {
@@ -209,7 +204,7 @@ if (rect.bottom <= viewportHeight) {
         <img
           ref={imageRef}
           src="/hero.png"
-          className="w-full h-[120vh] md:h-[150vh] object-cover object-top"
+          className="w-full h-[110vh] md:h-[150vh] object-cover object-top"
           alt="hero"
         />
 
@@ -267,7 +262,7 @@ if (rect.bottom <= viewportHeight) {
 
       </section>
 
-      <div className="relative z-20 bg-[#F5F5F5]">
+      <div className="relative z-20 bg-[#F5F5F5] md:mt-0 -mt-24 md:-mt-0 rounded-t-3xl">
 
         <section className="py-32 px-6 border-t border-black/5">
           <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-end">
