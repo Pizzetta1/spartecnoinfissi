@@ -172,30 +172,33 @@ const handleScroll = () => {
       <Navbar />
 
       {/* HERO */}
-<section ref={heroRef} className="sticky top-0 h-screen overflow-hidden">
+<section
+  ref={heroRef}
+  className="relative md:relative md:h-auto h-screen overflow-hidden"
+>
 
-  <ParallaxImage />
+  {/* MOBILE */}
+  <div className="md:hidden sticky top-0 h-screen">
+    <ParallaxImage />
+  </div>
 
+  {/* DESKTOP (IDENTICO A PRIMA) */}
+  <div className="hidden md:block">
+    <img
+      src="/hero.png"
+      className="w-full h-[150vh] object-cover object-top"
+      alt="hero"
+    />
+  </div>
+
+  {/* overlay */}
   <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/20 to-black/80"></div>
   <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.08),transparent_60%)]"></div>
   <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_40%,rgba(0,0,0,0.7))]"></div>
 
   <div className="absolute top-0 left-0 w-full h-screen flex items-center justify-center text-center text-white px-6">
     <div className="max-w-5xl">
-
-{/* MOBILE SCROLL CLEAN */}
-<div
-  className={`md:hidden fixed bottom-[48px] left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 transition-opacity duration-500 ${
-    showScroll ? "opacity-100" : "opacity-0"
-  }`}
->
-  <div className="swipe-clean" />
-
-  <span className="scroll-text-mobile animate-scrollText">
-  Scorri
-</span>
-</div>
-
+      
 {/* DESKTOP SCROLL INDICATOR (ORIGINALE) */}
 <div
   className={`hidden md:flex absolute bottom-10 left-1/2 -translate-x-1/2 flex-col items-center gap-2 text-white/70 transition-opacity duration-500 ${
