@@ -166,16 +166,16 @@ export default function Home() {
 
       const isMobile = window.innerWidth < 768;
 
-      // HERO EFFECT SOLO DESKTOP
-if (window.innerWidth >= 768) {
-  if (rect.bottom <= viewportHeight) {
-    hero.style.position = "sticky";
-    hero.style.top = `${viewportHeight - rect.height}px`;
-  } else {
-    hero.style.position = "relative";
-    hero.style.top = "0px";
-  }
-}
+      // ✅ sticky SOLO desktop
+      if (!isMobile) {
+        if (rect.bottom <= viewportHeight) {
+          hero.style.position = "sticky";
+          hero.style.top = `${viewportHeight - rect.height}px`;
+        } else {
+          hero.style.position = "relative";
+          hero.style.top = "0px";
+        }
+      }
 
       // ✅ parallax SOLO desktop
       if (imageRef.current && !isMobile) {
@@ -199,12 +199,15 @@ if (window.innerWidth >= 768) {
       <Navbar />
 
       {/* HERO */}
-     <section ref={heroRef} className="relative overflow-hidden group">
+     <section
+  ref={heroRef}
+  className="relative md:relative fixed md:top-auto top-0 left-0 w-full h-[115vh] md:h-auto overflow-hidden"
+>
 
         <img
           ref={imageRef}
           src="/hero.png"
-          className="w-full h-[115vh] md:h-[150vh] object-cover object-top"
+          className="w-full h-full object-cover object-top"
           alt="hero"
         />
 
@@ -262,7 +265,7 @@ if (window.innerWidth >= 768) {
 
       </section>
 
-     <div className="relative z-20 bg-[#F5F5F5] -mt-[90px] md:mt-0 rounded-t-3xl pt-6 shadow-[0_-10px_30px_rgba(0,0,0,0.12)]">
+      <div className="relative z-30 bg-[#F5F5F5] mt-[100vh] md:mt-0 rounded-t-3xl">
 
         <section className="py-32 px-6 border-t border-black/5">
           <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-end">
