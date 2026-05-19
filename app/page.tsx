@@ -166,16 +166,21 @@ export default function Home() {
 
       const isMobile = window.innerWidth < 768;
 
-      // ✅ sticky SOLO desktop
-      if (!isMobile) {
-        if (rect.bottom <= viewportHeight) {
-          hero.style.position = "sticky";
-          hero.style.top = `${viewportHeight - rect.height}px`;
-        } else {
-          hero.style.position = "relative";
-          hero.style.top = "0px";
-        }
-      }
+    // sticky per desktop + mobile (adattato)
+if (rect.bottom <= viewportHeight) {
+  hero.style.position = "sticky";
+
+  if (window.innerWidth < 768) {
+    // MOBILE → comportamento semplice e fluido
+    hero.style.top = "0px";
+  } else {
+    // DESKTOP → effetto originale
+    hero.style.top = `${viewportHeight - rect.height}px`;
+  }
+} else {
+  hero.style.position = "relative";
+  hero.style.top = "0px";
+}
 
       // ✅ parallax SOLO desktop
       if (imageRef.current && !isMobile) {

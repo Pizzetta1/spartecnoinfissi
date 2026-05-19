@@ -206,12 +206,12 @@ export default function ChiSiamoPage() {
               {[
                 {
                   name: "Gianluca Spanu",
-                  role: "Co-fondatore",
+                  role: "Montatore e coordinatore cantieri",
                   desc: "Artigiano del legno con oltre vent'anni di esperienza. Coordina i cantieri di installazione in tutta la Sardegna.",
                 },
                 {
                   name: "Massimiliano Spanu",
-                  role: "Co-fondatore",
+                  role: "Progettista e responsabile tecnico",
                   desc: "Responsabile della qualità e dei rapporti con i clienti. Gestisce la progettazione e la produzione nel laboratorio di Santu Lussurgiu.",
                 },
               ].map((person, i) => (
