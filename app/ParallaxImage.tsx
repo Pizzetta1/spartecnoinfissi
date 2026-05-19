@@ -22,7 +22,7 @@ export default function ParallaxImage() {
 
   return (
     <motion.img
-      src="/hero.jpg"
+      src="/hero.png"
       style={{ y }}
       className="w-full h-[150vh] object-cover object-top"
       alt="hero"
