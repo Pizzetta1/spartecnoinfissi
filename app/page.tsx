@@ -171,24 +171,24 @@ const handleScroll = () => {
 
       <Navbar />
 
-      {/* HERO */}
+     {/* HERO */}
 <section
   ref={heroRef}
-  className="relative md:relative md:h-auto h-screen overflow-hidden"
+  className="relative h-[110vh] md:h-auto overflow-hidden"
 >
 
   {/* MOBILE */}
-  <div className="md:hidden sticky top-0 h-screen">
-    <ParallaxImage />
-  </div>
-
-  {/* DESKTOP (IDENTICO A PRIMA) */}
-  <div className="hidden md:block">
+  <div className="md:hidden h-full">
     <img
       src="/hero.png"
-      className="w-full h-[150vh] object-cover object-top"
+      className="w-full h-full object-cover object-top"
       alt="hero"
     />
+  </div>
+
+  {/* DESKTOP */}
+  <div className="hidden md:block">
+    <ParallaxImage />
   </div>
 
   {/* overlay */}
@@ -198,7 +198,7 @@ const handleScroll = () => {
 
   <div className="absolute top-0 left-0 w-full h-screen flex items-center justify-center text-center text-white px-6">
     <div className="max-w-5xl">
-      
+
 {/* DESKTOP SCROLL INDICATOR (ORIGINALE) */}
 <div
   className={`hidden md:flex absolute bottom-10 left-1/2 -translate-x-1/2 flex-col items-center gap-2 text-white/70 transition-opacity duration-500 ${
