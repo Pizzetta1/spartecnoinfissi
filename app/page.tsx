@@ -63,7 +63,6 @@ const rooms = [
 function ShowroomSection() {
   const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
 
-  // ✅ MOBILE VERSION (verticale semplice)
   if (isMobile) {
     return (
       <div className="px-6 py-24 space-y-16">
@@ -88,7 +87,6 @@ function ShowroomSection() {
     );
   }
 
-  // ✅ DESKTOP (IDENTICO)
   const containerRef = useRef<HTMLDivElement>(null);
 
   const { scrollYProgress } = useScroll({
@@ -107,11 +105,7 @@ function ShowroomSection() {
             <div key={i} className="flex h-full" style={{ width: "20%" }}>
 
               <div className="w-[55%] relative overflow-hidden">
-                <img
-                  src={room.img}
-                  className="w-full h-full object-cover"
-                  alt={room.title}
-                />
+                <img src={room.img} className="w-full h-full object-cover" alt={room.title} />
               </div>
 
               <div className="w-[45%] flex flex-col justify-center px-16">
@@ -137,7 +131,6 @@ function ShowroomSection() {
 
 export default function Home() {
   const heroRef = useRef<HTMLElement>(null);
-  const imageRef = useRef<HTMLImageElement>(null);
   const [showScroll, setShowScroll] = useState(true);
 
   useEffect(() => {
@@ -153,36 +146,9 @@ export default function Home() {
 
     requestAnimationFrame(raf);
 
-    const hero = heroRef.current;
-
     const handleScroll = () => {
-      if (!hero) return;
-
-      const rect = hero.getBoundingClientRect();
-      const viewportHeight = window.innerHeight;
-
       if (window.scrollY > 50) setShowScroll(false);
       else setShowScroll(true);
-
-      const isMobile = window.innerWidth < 768;
-
-      // ✅ sticky SOLO desktop
-      if (!isMobile) {
-        if (rect.bottom <= viewportHeight) {
-          hero.style.position = "sticky";
-          hero.style.top = `${viewportHeight - rect.height}px`;
-        } else {
-          hero.style.position = "relative";
-          hero.style.top = "0px";
-        }
-      }
-
-      // ✅ parallax SOLO desktop
-      if (imageRef.current && !isMobile) {
-        const scrollY = window.scrollY;
-        imageRef.current.style.transform =
-          `translate3d(0, ${scrollY * 0.12}px, 0) scale(1.06)`;
-      }
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -199,62 +165,47 @@ export default function Home() {
       <Navbar />
 
       {/* HERO */}
-     <section ref={heroRef} className="relative overflow-hidden group">
+      <section ref={heroRef} className="relative overflow-hidden">
 
         <img
-          ref={imageRef}
           src="/hero.png"
           className="w-full h-[110vh] md:h-[150vh] object-cover object-top"
           alt="hero"
         />
 
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/20 to-black/80"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.08),transparent_60%)]"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_40%,rgba(0,0,0,0.7))]"></div>
 
         <div className="absolute top-0 left-0 w-full h-screen flex items-center justify-center text-center text-white px-6">
           <div className="max-w-5xl">
 
-{/* MOBILE SCROLL CLEAN */}
-<div
-  className={`md:hidden fixed bottom-[48px] left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 transition-opacity duration-500 ${
-    showScroll ? "opacity-100" : "opacity-0"
-  }`}
->
-  <div className="swipe-clean" />
+            {/* MOBILE SCROLL */}
+            <div
+              className={`md:hidden fixed bottom-[48px] left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 transition-opacity duration-500 ${
+                showScroll ? "opacity-100" : "opacity-0"
+              }`}
+            >
+              <div className="swipe-clean" />
+              <span className="scroll-text-mobile animate-scrollText">Scorri</span>
+            </div>
 
-  <span className="scroll-text-mobile animate-scrollText">
-  Scorri
-</span>
-</div>
-
-{/* DESKTOP SCROLL INDICATOR (ORIGINALE) */}
-<div
-  className={`hidden md:flex absolute bottom-10 left-1/2 -translate-x-1/2 flex-col items-center gap-2 text-white/70 transition-opacity duration-500 ${
-    showScroll ? "opacity-100" : "opacity-0"
-  }`}
->
-  <div className="w-[22px] h-[36px] border border-white/50 rounded-full flex items-start justify-center p-[4px]">
-    <div className="w-[3px] h-[6px] bg-white/70 rounded-full animate-scroll"></div>
-  </div>
-  <span className="text-[10px] tracking-widest uppercase">Scroll</span>
-</div>
+            {/* DESKTOP */}
+            <div
+              className={`hidden md:flex absolute bottom-10 left-1/2 -translate-x-1/2 flex-col items-center gap-2 text-white/70 transition-opacity duration-500 ${
+                showScroll ? "opacity-100" : "opacity-0"
+              }`}
+            >
+              <div className="w-[22px] h-[36px] border border-white/50 rounded-full flex items-start justify-center p-[4px]">
+                <div className="w-[3px] h-[6px] bg-white/70 rounded-full animate-scroll"></div>
+              </div>
+              <span className="text-[10px] tracking-widest uppercase">Scroll</span>
+            </div>
 
             <FadeIn>
-              <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif leading-[1.02] tracking-[-0.02em]">
+              <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif">
                 Infissi e arredi
                 <br />
-                <span className="text-white/70">
-                  progettati per durare
-                </span>
+                <span className="text-white/70">progettati per durare</span>
               </h1>
-            </FadeIn>
-
-            <FadeIn delay={0.2}>
-              <p className="mt-10 text-lg md:text-xl text-gray-300 font-light tracking-[0.02em] max-w-2xl mx-auto leading-relaxed">
-                Precisione tecnica, materiali selezionati e design contemporaneo
-                per ogni spazio abitativo.
-              </p>
             </FadeIn>
 
           </div>
@@ -262,32 +213,14 @@ export default function Home() {
 
       </section>
 
-     <div className="relative z-20 bg-[#F5F5F5] -mt-[20vh] md:mt-0 rounded-t-3xl pt-6 shadow-[0_-10px_30px_rgba(0,0,0,0.12)]">
+      {/* 🔥 FIX VERO */}
+      <div className="relative z-20 bg-[#F5F5F5] -mt-[22vh] md:mt-0 rounded-t-3xl shadow-[0_-10px_30px_rgba(0,0,0,0.12)]">
 
         <section className="py-32 px-6 border-t border-black/5">
-          <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-end">
-
-            <FadeIn>
-              <h2 className="text-4xl md:text-5xl font-serif leading-tight">
-                Progettiamo e realizziamo <em>infissi in legno su misura</em>,{" "}
-                <em>porte da interni</em> e <em>arredi</em>.
-              </h2>
-            </FadeIn>
-
-            <FadeIn delay={0.2}>
-              <div className="text-neutral-500 space-y-6">
-                <p>
-                  Dal laboratorio di Santu Lussurgiu, serviamo privati e professionisti
-                  in tutta la Sardegna.
-                </p>
-
-                <Link href="/chi-siamo" className="group flex items-center gap-3">
-                  <span>La nostra storia</span>
-                  <span className="h-px w-8 bg-black group-hover:w-16 transition-all" />
-                </Link>
-              </div>
-            </FadeIn>
-
+          <div className="max-w-6xl mx-auto">
+            <h2 className="text-3xl md:text-5xl font-serif">
+              Progettiamo e realizziamo infissi, porte e arredi su misura.
+            </h2>
           </div>
         </section>
 
