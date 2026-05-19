@@ -166,16 +166,16 @@ export default function Home() {
 
       const isMobile = window.innerWidth < 768;
 
-      // ✅ sticky SOLO desktop
-      if (!isMobile) {
-        if (rect.bottom <= viewportHeight) {
-          hero.style.position = "sticky";
-          hero.style.top = `${viewportHeight - rect.height}px`;
-        } else {
-          hero.style.position = "relative";
-          hero.style.top = "0px";
-        }
-      }
+      // HERO EFFECT SOLO DESKTOP
+if (window.innerWidth >= 768) {
+  if (rect.bottom <= viewportHeight) {
+    hero.style.position = "sticky";
+    hero.style.top = `${viewportHeight - rect.height}px`;
+  } else {
+    hero.style.position = "relative";
+    hero.style.top = "0px";
+  }
+}
 
       // ✅ parallax SOLO desktop
       if (imageRef.current && !isMobile) {
@@ -204,15 +204,13 @@ export default function Home() {
         <img
           ref={imageRef}
           src="/hero.png"
-          className="w-full h-[110vh] md:h-[150vh] object-cover object-top"
+          className="w-full h-[115vh] md:h-[150vh] object-cover object-top"
           alt="hero"
         />
 
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/20 to-black/80"></div>
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.08),transparent_60%)]"></div>
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_40%,rgba(0,0,0,0.7))]"></div>
-        {/* BLUR OVERLAY MOBILE */}
-<div className="absolute inset-0 backdrop-blur-[2px] bg-white/0 md:hidden pointer-events-none" />
 
         <div className="absolute top-0 left-0 w-full h-screen flex items-center justify-center text-center text-white px-6">
           <div className="max-w-5xl">
@@ -264,7 +262,7 @@ export default function Home() {
 
       </section>
 
-      <div className="relative z-20 bg-[#F5F5F5] md:mt-0 -mt-24 md:-mt-0 rounded-t-3xl pt-6 shadow-[0_-20px_60px_rgba(0,0,0,0.15)]">
+     <div className="relative z-20 bg-[#F5F5F5] -mt-[90px] md:mt-0 rounded-t-3xl pt-6 shadow-[0_-10px_30px_rgba(0,0,0,0.12)]">
 
         <section className="py-32 px-6 border-t border-black/5">
           <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-end">
