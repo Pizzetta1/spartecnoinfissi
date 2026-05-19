@@ -175,17 +175,11 @@ export default function Home() {
           hero.style.top = "0px";
         }
 
-       if (imageRef.current) {
-  const scrollY = window.scrollY;
-
-  if (isMobile) {
-    imageRef.current.style.transform =
-      `translate3d(0, ${scrollY * 0.035}px, 0) scale(1.03)`;
-  } else {
-    imageRef.current.style.transform =
-      `translate3d(0, ${scrollY * 0.12}px, 0) scale(1.06)`;
-  }
-}
+        if (imageRef.current) {
+          const scrollY = window.scrollY;
+          imageRef.current.style.transform =
+            `translate3d(0, ${scrollY * 0.12}px, 0) scale(1.06)`;
+        }
       }
     };
 
@@ -204,11 +198,10 @@ export default function Home() {
       {/* HERO MOBILE */}
       <section className="md:hidden sticky top-0 h-screen overflow-hidden">
         <img
-  ref={imageRef}
-  src="/hero.png"
-  className="w-full h-[108vh] md:h-[150vh] object-cover object-top will-change-transform"
-  alt="hero"
-/>
+          src="/hero.png"
+          className="w-full h-full object-cover object-top"
+          alt="hero"
+        />
 
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/20 to-black/80"></div>
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.08),transparent_60%)]"></div>
@@ -292,7 +285,7 @@ export default function Home() {
       </section>
 
       <div className="relative z-20 bg-[#F5F5F5] -mt-16 md:mt-0 shadow-[0_-10px_30px_rgba(0,0,0,0.12)]">
-        <section className="py-32 px-6 border-t border-black/5">
+        <section className="pt-16 pb-32 md:py-32 px-6 border-t border-black/5">
           <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-end">
             <FadeIn>
               <h2 className="text-4xl md:text-5xl font-serif leading-tight">
