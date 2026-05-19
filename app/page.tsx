@@ -1,4 +1,4 @@
-"use client";  
+"use client";
 
 import { useEffect, useRef, useState } from "react";
 import Lenis from "lenis";
@@ -63,7 +63,6 @@ const rooms = [
 function ShowroomSection() {
   const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
 
-  // ✅ MOBILE VERSION (verticale semplice)
   if (isMobile) {
     return (
       <div className="px-6 py-24 space-y-16">
@@ -88,7 +87,6 @@ function ShowroomSection() {
     );
   }
 
-  // ✅ DESKTOP (IDENTICO)
   const containerRef = useRef<HTMLDivElement>(null);
 
   const { scrollYProgress } = useScroll({
@@ -101,11 +99,9 @@ function ShowroomSection() {
   return (
     <div ref={containerRef} className="relative border-t border-black/5" style={{ height: "500vh" }}>
       <div className="sticky top-0 h-screen overflow-hidden bg-[#F5F5F5]">
-
         <motion.div className="flex h-full" style={{ width: "500%", x }}>
           {rooms.map((room, i) => (
             <div key={i} className="flex h-full" style={{ width: "20%" }}>
-
               <div className="w-[55%] relative overflow-hidden">
                 <img
                   src={room.img}
@@ -125,11 +121,9 @@ function ShowroomSection() {
                   <span className="h-px w-8 bg-black group-hover:w-16 transition-all" />
                 </Link>
               </div>
-
             </div>
           ))}
         </motion.div>
-
       </div>
     </div>
   );
@@ -141,33 +135,38 @@ export default function Home() {
   const [showScroll, setShowScroll] = useState(true);
 
   useEffect(() => {
-    const lenis = new Lenis({
-      duration: 1.2,
-      smoothWheel: true,
-    });
+    const isMobile = window.innerWidth < 768;
 
-    function raf(time: number) {
-      lenis.raf(time);
+    let lenis: Lenis | null = null;
+
+    if (!isMobile) {
+      lenis = new Lenis({
+        duration: 1.2,
+        smoothWheel: true,
+      });
+
+      function raf(time: number) {
+        lenis?.raf(time);
+        requestAnimationFrame(raf);
+      }
+
       requestAnimationFrame(raf);
     }
-
-    requestAnimationFrame(raf);
 
     const hero = heroRef.current;
 
     const handleScroll = () => {
-      if (!hero) return;
-
-      const rect = hero.getBoundingClientRect();
-      const viewportHeight = window.innerHeight;
-
-      if (window.scrollY > 50) setShowScroll(false);
+      if (window.scrollY > 20) setShowScroll(false);
       else setShowScroll(true);
 
-      const isMobile = window.innerWidth < 768;
+      if (!hero) return;
 
-      // ✅ sticky SOLO desktop
-      if (!isMobile) {
+      const isMobileNow = window.innerWidth < 768;
+
+      if (!isMobileNow) {
+        const rect = hero.getBoundingClientRect();
+        const viewportHeight = window.innerHeight;
+
         if (rect.bottom <= viewportHeight) {
           hero.style.position = "sticky";
           hero.style.top = `${viewportHeight - rect.height}px`;
@@ -175,13 +174,12 @@ export default function Home() {
           hero.style.position = "relative";
           hero.style.top = "0px";
         }
-      }
 
-      // ✅ parallax SOLO desktop
-      if (imageRef.current && !isMobile) {
-        const scrollY = window.scrollY;
-        imageRef.current.style.transform =
-          `translate3d(0, ${scrollY * 0.12}px, 0) scale(1.06)`;
+        if (imageRef.current) {
+          const scrollY = window.scrollY;
+          imageRef.current.style.transform =
+            `translate3d(0, ${scrollY * 0.12}px, 0) scale(1.06)`;
+        }
       }
     };
 
@@ -189,18 +187,59 @@ export default function Home() {
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
-      lenis.destroy();
+      lenis?.destroy();
     };
   }, []);
 
   return (
     <main className="flex flex-col text-[#0A0A0A] selection:bg-black selection:text-white">
-
       <Navbar />
 
-      {/* HERO */}
-      <section ref={heroRef} className="relative overflow-hidden">
+      {/* HERO MOBILE */}
+      <section className="md:hidden sticky top-0 h-screen overflow-hidden">
+        <img
+          src="/hero.png"
+          className="w-full h-full object-cover object-top"
+          alt="hero"
+        />
 
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/20 to-black/80"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.08),transparent_60%)]"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_40%,rgba(0,0,0,0.7))]"></div>
+
+        <div className="absolute top-0 left-0 w-full h-screen flex items-center justify-center text-center text-white px-6">
+          <div className="max-w-5xl">
+            <div
+              className={`fixed bottom-[48px] left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 transition-opacity duration-500 ${
+                showScroll ? "opacity-100" : "opacity-0"
+              }`}
+            >
+              <div className="swipe-clean" />
+              <span className="scroll-text-mobile animate-scrollText">Scorri</span>
+            </div>
+
+            <FadeIn>
+              <h1 className="text-5xl font-serif leading-[1.02] tracking-[-0.02em]">
+                Infissi e arredi
+                <br />
+                <span className="text-white/70">
+                  progettati per durare
+                </span>
+              </h1>
+            </FadeIn>
+
+            <FadeIn delay={0.2}>
+              <p className="mt-10 text-lg text-gray-300 font-light tracking-[0.02em] max-w-2xl mx-auto leading-relaxed">
+                Precisione tecnica, materiali selezionati e design contemporaneo
+                per ogni spazio abitativo.
+              </p>
+            </FadeIn>
+          </div>
+        </div>
+      </section>
+
+      {/* HERO DESKTOP ORIGINALE */}
+      <section ref={heroRef} className="hidden md:block relative overflow-hidden">
         <img
           ref={imageRef}
           src="/hero.png"
@@ -214,31 +253,16 @@ export default function Home() {
 
         <div className="absolute top-0 left-0 w-full h-screen flex items-center justify-center text-center text-white px-6">
           <div className="max-w-5xl">
-
-{/* MOBILE SCROLL CLEAN */}
-<div
-  className={`md:hidden fixed bottom-[48px] left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 transition-opacity duration-500 ${
-    showScroll ? "opacity-100" : "opacity-0"
-  }`}
->
-  <div className="swipe-clean" />
-
-  <span className="scroll-text-mobile animate-scrollText">
-  Scorri
-</span>
-</div>
-
-{/* DESKTOP SCROLL INDICATOR (ORIGINALE) */}
-<div
-  className={`hidden md:flex absolute bottom-10 left-1/2 -translate-x-1/2 flex-col items-center gap-2 text-white/70 transition-opacity duration-500 ${
-    showScroll ? "opacity-100" : "opacity-0"
-  }`}
->
-  <div className="w-[22px] h-[36px] border border-white/50 rounded-full flex items-start justify-center p-[4px]">
-    <div className="w-[3px] h-[6px] bg-white/70 rounded-full animate-scroll"></div>
-  </div>
-  <span className="text-[10px] tracking-widest uppercase">Scroll</span>
-</div>
+            <div
+              className={`flex absolute bottom-10 left-1/2 -translate-x-1/2 flex-col items-center gap-2 text-white/70 transition-opacity duration-500 ${
+                showScroll ? "opacity-100" : "opacity-0"
+              }`}
+            >
+              <div className="w-[22px] h-[36px] border border-white/50 rounded-full flex items-start justify-center p-[4px]">
+                <div className="w-[3px] h-[6px] bg-white/70 rounded-full animate-scroll"></div>
+              </div>
+              <span className="text-[10px] tracking-widest uppercase">Scroll</span>
+            </div>
 
             <FadeIn>
               <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif leading-[1.02] tracking-[-0.02em]">
@@ -256,17 +280,13 @@ export default function Home() {
                 per ogni spazio abitativo.
               </p>
             </FadeIn>
-
           </div>
         </div>
-
       </section>
 
-      <div className="relative z-20 bg-[#F5F5F5] -mt-[80px] md:mt-0 rounded-t-3xl">
-
+      <div className="relative z-20 bg-[#F5F5F5] -mt-16 md:mt-0 rounded-t-3xl shadow-[0_-10px_30px_rgba(0,0,0,0.12)]">
         <section className="py-32 px-6 border-t border-black/5">
           <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-end">
-
             <FadeIn>
               <h2 className="text-4xl md:text-5xl font-serif leading-tight">
                 Progettiamo e realizziamo <em>infissi in legno su misura</em>,{" "}
@@ -287,16 +307,13 @@ export default function Home() {
                 </Link>
               </div>
             </FadeIn>
-
           </div>
         </section>
 
         <ShowroomSection />
 
-        {/* ── I NOSTRI LAVORI ── */}
         <section className="py-44 px-6 border-t border-black/5">
           <div className="max-w-6xl mx-auto">
-
             <FadeIn>
               <h2 className="text-4xl font-serif text-center mb-20">
                 I nostri lavori
@@ -332,7 +349,6 @@ export default function Home() {
               ].map((item, i) => (
                 <FadeIn key={i} delay={i * 0.2}>
                   <div className="relative h-[420px] overflow-hidden rounded-xl group cursor-pointer">
-
                     <div className="relative w-full h-full overflow-hidden">
                       <img
                         src={item.img}
@@ -356,16 +372,13 @@ export default function Home() {
                         {item.desc}
                       </p>
                     </div>
-
                   </div>
                 </FadeIn>
               ))}
             </div>
-
           </div>
         </section>
 
-        {/* ── NUMERI ── */}
         <section className="py-32 px-6 border-t border-black/5">
           <div className="max-w-6xl mx-auto">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-12 text-center">
@@ -386,10 +399,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ── CTA ── */}
         <section className="bg-[#0A0A0A] text-white py-44 text-center relative overflow-hidden">
-
-          {/* LUCE CTA */}
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.08),transparent_60%)]"></div>
 
           <FadeIn>
@@ -404,7 +414,6 @@ export default function Home() {
             <div className="mt-10">
               <MagneticButton>
                 <Link href="/contatti" className="relative inline-block overflow-hidden px-10 py-4 border border-white group">
-
                   <span className="relative z-10 transition duration-500 group-hover:tracking-wide">
                     Contattaci
                   </span>
@@ -414,16 +423,12 @@ export default function Home() {
                   <span className="absolute inset-0 flex items-center justify-center text-black opacity-0 group-hover:opacity-100 transition duration-500 z-10">
                     Contattaci
                   </span>
-
                 </Link>
               </MagneticButton>
             </div>
           </FadeIn>
-
         </section>
-
       </div>
-
     </main>
   );
 }
