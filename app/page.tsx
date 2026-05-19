@@ -11,6 +11,7 @@ import {
   useTransform,
 } from "framer-motion";
 import Navbar from "./components/Navbar";
+import ParallaxImage from "./components/ParallaxImage";
 
 const rooms = [
   {
@@ -137,7 +138,6 @@ function ShowroomSection() {
 
 export default function Home() {
   const heroRef = useRef<HTMLElement>(null);
-  const imageRef = useRef<HTMLImageElement>(null);
   const [showScroll, setShowScroll] = useState(true);
 
   useEffect(() => {
@@ -153,37 +153,10 @@ export default function Home() {
 
     requestAnimationFrame(raf);
 
-    const hero = heroRef.current;
-
-    const handleScroll = () => {
-      if (!hero) return;
-
-      const rect = hero.getBoundingClientRect();
-      const viewportHeight = window.innerHeight;
-
-      if (window.scrollY > 50) setShowScroll(false);
-      else setShowScroll(true);
-
-      const isMobile = window.innerWidth < 768;
-
-      // ✅ sticky SOLO desktop
-      if (!isMobile) {
-        if (rect.bottom <= viewportHeight) {
-          hero.style.position = "sticky";
-          hero.style.top = `${viewportHeight - rect.height}px`;
-        } else {
-          hero.style.position = "relative";
-          hero.style.top = "0px";
-        }
-      }
-
-      // ✅ parallax SOLO desktop
-      if (imageRef.current && !isMobile) {
-        const scrollY = window.scrollY;
-        imageRef.current.style.transform =
-          `translate3d(0, ${scrollY * 0.12}px, 0) scale(1.06)`;
-      }
-    };
+const handleScroll = () => {
+  if (window.scrollY > 50) setShowScroll(false);
+  else setShowScroll(true);
+};
 
     window.addEventListener("scroll", handleScroll);
 
@@ -199,24 +172,16 @@ export default function Home() {
       <Navbar />
 
       {/* HERO */}
-     <section
-  ref={heroRef}
-  className="relative md:relative fixed md:top-auto top-0 left-0 w-full h-[115vh] md:h-auto overflow-hidden"
->
+<section ref={heroRef} className="sticky top-0 h-screen overflow-hidden">
 
-        <img
-          ref={imageRef}
-          src="/hero.png"
-          className="w-full h-full object-cover object-top"
-          alt="hero"
-        />
+  <ParallaxImage />
 
-        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/20 to-black/80"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.08),transparent_60%)]"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_40%,rgba(0,0,0,0.7))]"></div>
+  <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/20 to-black/80"></div>
+  <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.08),transparent_60%)]"></div>
+  <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_40%,rgba(0,0,0,0.7))]"></div>
 
-        <div className="absolute top-0 left-0 w-full h-screen flex items-center justify-center text-center text-white px-6">
-          <div className="max-w-5xl">
+  <div className="absolute top-0 left-0 w-full h-screen flex items-center justify-center text-center text-white px-6">
+    <div className="max-w-5xl">
 
 {/* MOBILE SCROLL CLEAN */}
 <div
@@ -265,7 +230,7 @@ export default function Home() {
 
       </section>
 
-      <div className="relative z-30 bg-[#F5F5F5] mt-[100vh] md:mt-0 rounded-t-3xl">
+      <div className="relative z-20 bg-[#F5F5F5] -mt-[25vh] md:mt-0 rounded-t-3xl pt-6 shadow-[0_-10px_30px_rgba(0,0,0,0.12)]">
 
         <section className="py-32 px-6 border-t border-black/5">
           <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-end">
