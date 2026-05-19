@@ -262,7 +262,7 @@ export default function Home() {
 
       </section>
 
-      <div className="relative z-20 bg-[#F5F5F5]">
+      <div className="relative z-20 bg-[#F5F5F5] -mt-[80px] md:mt-0 rounded-t-3xl">
 
         <section className="py-32 px-6 border-t border-black/5">
           <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-end">
