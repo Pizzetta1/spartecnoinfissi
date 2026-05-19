@@ -209,7 +209,7 @@ if (rect.bottom <= viewportHeight) {
         <img
           ref={imageRef}
           src="/hero.png"
-          className="w-full h-[100vh] md:h-[150vh] object-cover object-top"
+          className="w-full h-[120vh] md:h-[150vh] object-cover object-top"
           alt="hero"
         />
 
