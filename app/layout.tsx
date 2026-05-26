@@ -32,13 +32,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="it" className={`${inter.variable} ${playfair.variable}`}>
-      <body className="font-sans bg-[#F5F5F5] text-[#0A0A0A] cursor-none">
+      <body className="font-sans bg-[#F5F5F5] text-[#0A0A0A] md:cursor-none">
 
         {/* LOADER */}
         <Loader />
 
         {/* CURSORE */}
-        <CustomCursor />
+        <div className="hidden md:block">
+  <CustomCursor />
+</div>
 
         {/* CONTENUTO */}
         {children}
