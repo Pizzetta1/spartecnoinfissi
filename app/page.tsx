@@ -64,28 +64,54 @@ function ShowroomSection() {
   const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
 
   if (isMobile) {
-    return (
-      <div className="px-6 py-24 space-y-16">
-        {rooms.map((room, i) => (
-          <div key={i}>
+  return (
+    <div className="px-6 py-20 space-y-10">
+      {rooms.map((room, i) => (
+        <div
+          key={i}
+          className="group overflow-hidden rounded-2xl bg-white/70 border border-black/8 shadow-[0_10px_30px_rgba(0,0,0,0.04)]"
+        >
+          <div className="relative overflow-hidden">
             <img
               src={room.img}
-              className="w-full h-[260px] object-cover rounded-xl mb-6"
+              className="w-full h-[320px] object-cover transition duration-700 ease-out group-hover:scale-[1.03]"
               alt={room.title}
             />
-            <p className="text-xs text-neutral-400 uppercase mb-2">{room.number}</p>
-            <h2 className="text-2xl font-serif mb-2">{room.title}</h2>
-            <p className="text-neutral-500 mb-4">{room.subtitle}</p>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent"></div>
 
-            <Link href={room.href} className="flex items-center gap-2">
+            <div className="absolute top-4 left-4">
+              <span className="inline-flex items-center rounded-full bg-white/85 px-3 py-1 text-[10px] tracking-[0.25em] uppercase text-neutral-500 backdrop-blur-sm">
+                {room.number}
+              </span>
+            </div>
+          </div>
+
+          <div className="p-6">
+            <h2 className="text-[28px] font-serif leading-tight tracking-tight">
+              {room.title}
+            </h2>
+
+            <p className="mt-3 text-neutral-500 text-sm leading-relaxed">
+              {room.subtitle}
+            </p>
+
+            <p className="mt-4 text-neutral-600 text-sm leading-relaxed">
+              {room.desc}
+            </p>
+
+            <Link
+              href={room.href}
+              className="mt-6 inline-flex items-center gap-3 text-sm tracking-wide"
+            >
               <span>{room.cta}</span>
-              <span className="h-px w-6 bg-black" />
+              <span className="h-px w-8 bg-black transition-all duration-300 group-hover:w-12" />
             </Link>
           </div>
-        ))}
-      </div>
-    );
-  }
+        </div>
+      ))}
+    </div>
+  );
+}
 
   const containerRef = useRef<HTMLDivElement>(null);
 
