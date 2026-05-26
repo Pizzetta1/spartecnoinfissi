@@ -98,10 +98,9 @@ function ShowroomSection() {
             <p className="mt-4 text-neutral-600 text-sm leading-relaxed">
               {room.desc}
             </p>
-
-            <Link
+<Link
   href={room.href}
-  className="mt-6 inline-flex items-center gap-2 rounded-full border border-black/10 px-4 py-2 text-sm text-black transition duration-300 active:scale-[0.98]"
+  className="mt-6 inline-flex items-center gap-2 rounded-full bg-black text-white px-4 py-2 text-sm transition duration-300 active:scale-[0.98]"
 >
   <span>{room.cta}</span>
   <span aria-hidden="true">→</span>
