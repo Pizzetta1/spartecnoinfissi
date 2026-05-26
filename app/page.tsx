@@ -100,12 +100,12 @@ function ShowroomSection() {
             </p>
 
             <Link
-              href={room.href}
-              className="mt-6 inline-flex items-center gap-3 text-sm tracking-wide"
-            >
-              <span>{room.cta}</span>
-              <span className="h-px w-8 bg-black transition-all duration-300 group-hover:w-12" />
-            </Link>
+  href={room.href}
+  className="mt-6 inline-flex items-center gap-2 rounded-full border border-black/10 px-4 py-2 text-sm text-black transition duration-300 active:scale-[0.98]"
+>
+  <span>{room.cta}</span>
+  <span aria-hidden="true">→</span>
+</Link>
           </div>
         </div>
       ))}
