@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import Lenis from "lenis";
 import Link from "next/link";
+import Navbar from "../components/Navbar";
 import FadeIn from "../components/FadeIn";
 import MagneticButton from "../components/MagneticButton";
 
@@ -51,79 +52,72 @@ const windowTypes = [
 
 export default function InfissiPage() {
   useEffect(() => {
-    const lenis = new Lenis({ duration: 1.2, smoothWheel: true });
-    function raf(time: number) { lenis.raf(time); requestAnimationFrame(raf); }
-    requestAnimationFrame(raf);
-    return () => lenis.destroy();
+    const isMobile = window.innerWidth < 768;
+
+    let lenis: Lenis | null = null;
+
+    if (!isMobile) {
+      lenis = new Lenis({ duration: 1.2, smoothWheel: true });
+
+      function raf(time: number) {
+        lenis?.raf(time);
+        requestAnimationFrame(raf);
+      }
+
+      requestAnimationFrame(raf);
+    }
+
+    return () => lenis?.destroy();
   }, []);
 
   return (
     <main className="flex flex-col text-[#0A0A0A] selection:bg-black selection:text-white">
+      <Navbar />
 
-      {/* ════════════════════════════════════════
-          PAGE HERO
-      ════════════════════════════════════════ */}
-      <section className="relative h-screen overflow-hidden">
-
-        {/*
-          IMMAGINE HERO INFISSI
-          → Sostituire questo <div> con:
-          <img src="/images/infissi-hero.jpg" className="w-full h-full object-cover" alt="Infissi in legno" />
-        */}
+      {/* HERO */}
+      <section className="relative h-[100svh] md:h-screen overflow-hidden">
         <img
-  src="/infissipage.png"
-  className="w-full h-full object-cover"
-  alt="Infissi in legno"
-/>
+          src="/infissipage.png"
+          className="w-full h-full object-cover"
+          alt="Infissi in legno"
+        />
 
-        {/* GRADIENTE PROFONDO */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/20 to-black/80"></div>
-
-        {/* LUCE CENTRALE */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.08),transparent_60%)]"></div>
-
-        {/* VIGNETTA */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_40%,rgba(0,0,0,0.7))]"></div>
 
-        {/* TESTO */}
-        <div className="absolute inset-0 flex items-end pb-24 px-6 md:px-16 text-white">
+        <div className="absolute inset-0 flex items-end pb-14 md:pb-24 px-6 md:px-16 text-white">
           <FadeIn>
-            <p className="text-xs tracking-[0.3em] uppercase text-gray-400 mb-5">
+            <p className="text-[10px] md:text-xs tracking-[0.28em] md:tracking-[0.3em] uppercase text-gray-400 mb-4 md:mb-5">
               Serramenti · SP.AR. Tecnoinfissi
             </p>
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif leading-[1.02] tracking-[-0.02em]">
+            <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-serif leading-[1.02] tracking-[-0.02em]">
               Infissi in Legno
               <br />
               <span className="text-white/70">su Misura</span>
             </h1>
-            <p className="mt-8 text-lg md:text-xl text-gray-300 font-light tracking-[0.02em] max-w-2xl leading-relaxed">
+            <p className="mt-6 md:mt-8 text-base md:text-xl text-gray-300 font-light tracking-[0.02em] max-w-xl md:max-w-2xl leading-relaxed">
               Dalle finestre minimaliste ai serramenti tradizionali: ogni infisso
               nasce nel nostro laboratorio di Santu Lussurgiu e viene installato
               in tutta la Sardegna.
             </p>
           </FadeIn>
         </div>
-
       </section>
 
-      {/* ════════════════════════════════════════
-          CONTENUTO
-      ════════════════════════════════════════ */}
       <div className="relative z-20 bg-[#F5F5F5]">
-
-        {/* ── INTRO ── */}
-        <section className="py-44 px-6 border-t border-black/5">
-          <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-20 items-center">
-
+        {/* INTRO */}
+        <section className="py-20 md:py-44 px-6 border-t border-black/5">
+          <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 md:gap-20 items-center">
             <div>
               <FadeIn>
-                <h2 className="text-4xl md:text-5xl font-serif leading-tight tracking-tight">
+                <h2 className="text-3xl md:text-5xl font-serif leading-tight tracking-tight max-w-xl">
                   Il legno è una scelta
                   <br />che dura nel tempo
                 </h2>
               </FadeIn>
               <FadeIn delay={0.15}>
-                <p className="mt-8 text-gray-600 font-light leading-relaxed text-base">
+                <p className="mt-6 md:mt-8 text-gray-600 font-light leading-relaxed text-sm md:text-base max-w-xl">
                   Gli infissi in legno non sono solo un elemento funzionale: sono parte
                   dell'identità di una casa. Il calore naturale del legno, le sue proprietà
                   isolanti e la durabilità con la giusta manutenzione ne fanno la scelta
@@ -131,7 +125,7 @@ export default function InfissiPage() {
                 </p>
               </FadeIn>
               <FadeIn delay={0.25}>
-                <p className="mt-5 text-gray-600 font-light leading-relaxed text-base">
+                <p className="mt-4 md:mt-5 text-gray-600 font-light leading-relaxed text-sm md:text-base max-w-xl">
                   Nel nostro laboratorio, ogni finestra è costruita con attenzione al
                   millimetro: dall'essenza selezionata alle vernici certificate, fino
                   alla ferramenta di precisione. Produciamo internamente e installiamo
@@ -140,28 +134,21 @@ export default function InfissiPage() {
               </FadeIn>
             </div>
 
-            {/* IMMAGINE LATERALE */}
             <FadeIn delay={0.1}>
-              {/*
-                → Sostituire con:
-                <img src="/images/infissi-detail.jpg" className="w-full h-[500px] object-cover rounded-2xl" alt="..." />
-              */}
               <img
-  src="/infissipage2.png"
-  className="w-full h-[500px] object-cover rounded-2xl"
-  alt="Infissi dettaglio"
-/>
+                src="/infissipage2.png"
+                className="w-full h-[280px] sm:h-[360px] md:h-[500px] object-cover rounded-2xl"
+                alt="Infissi dettaglio"
+              />
             </FadeIn>
-
           </div>
         </section>
 
-        {/* ── TIPOLOGIE ── */}
-        <section className="py-44 px-6 border-t border-black/5">
+        {/* TIPOLOGIE */}
+        <section className="py-20 md:py-44 px-6 border-t border-black/5">
           <div className="max-w-6xl mx-auto">
-
             <FadeIn>
-              <h2 className="text-4xl md:text-5xl font-serif mb-24 tracking-tight">
+              <h2 className="text-3xl md:text-5xl font-serif mb-14 md:mb-24 tracking-tight">
                 Tipologie di Finestre
               </h2>
             </FadeIn>
@@ -169,54 +156,52 @@ export default function InfissiPage() {
             <div className="space-y-0">
               {windowTypes.map((w, i) => (
                 <FadeIn key={i} delay={i * 0.1}>
-                  <div className="grid md:grid-cols-2 gap-0 border-t border-black/10 py-16 items-center">
-
-                    {/* testo alternato */}
+                  <div className="grid md:grid-cols-2 gap-8 md:gap-0 border-t border-black/10 py-10 md:py-16 items-center">
                     <div className={i % 2 === 0 ? "md:pr-20" : "md:order-2 md:pl-20"}>
-                      <span className="text-xs tracking-[0.3em] uppercase text-gray-400">{w.num}</span>
-                      <h3 className="mt-3 text-3xl font-serif tracking-tight">{w.title}</h3>
-                      <p className="mt-5 text-gray-600 font-light leading-relaxed">{w.desc}</p>
-                      <p className="mt-4 text-gray-500 text-sm font-light leading-relaxed">{w.detail}</p>
+                      <span className="text-[10px] md:text-xs tracking-[0.28em] md:tracking-[0.3em] uppercase text-gray-400">
+                        {w.num}
+                      </span>
+                      <h3 className="mt-3 text-2xl md:text-3xl font-serif tracking-tight">
+                        {w.title}
+                      </h3>
+                      <p className="mt-4 md:mt-5 text-gray-600 font-light leading-relaxed text-sm md:text-base">
+                        {w.desc}
+                      </p>
+                      <p className="mt-3 md:mt-4 text-gray-500 text-sm font-light leading-relaxed">
+                        {w.detail}
+                      </p>
                     </div>
 
-                    {/* immagine alternata */}
                     <div className={i % 2 === 0 ? "" : "md:order-1"}>
-                      {/*
-                        → Sostituire con:
-                        <img src={`/images/finestra-${w.num}.jpg`} className="w-full h-[340px] object-cover rounded-2xl" alt={w.title} />
-                      */}
                       <img
-  src={
-    i === 0 ? "/infissipage3.png" :
-    i === 1 ? "/infissipage4.png" :
-    i === 2 ? "/infissipage5.png" :
-    "/infissipage6.png"
-  }
-  className="w-full h-[340px] object-cover rounded-2xl"
-  alt={w.title}
-/>
+                        src={
+                          i === 0 ? "/infissipage3.png" :
+                          i === 1 ? "/infissipage4.png" :
+                          i === 2 ? "/infissipage5.png" :
+                          "/infissipage6.png"
+                        }
+                        className="w-full h-[240px] sm:h-[280px] md:h-[340px] object-cover rounded-2xl"
+                        alt={w.title}
+                      />
                     </div>
-
                   </div>
                 </FadeIn>
               ))}
               <div className="border-t border-black/10"></div>
             </div>
-
           </div>
         </section>
 
-        {/* ── PROCESSO ── */}
-        <section className="py-44 px-6 border-t border-black/5">
+        {/* PROCESSO */}
+        <section className="py-20 md:py-44 px-6 border-t border-black/5">
           <div className="max-w-6xl mx-auto">
-
             <FadeIn>
-              <h2 className="text-4xl font-serif text-center mb-24">
+              <h2 className="text-3xl md:text-4xl font-serif text-center mb-14 md:mb-24">
                 Come lavoriamo
               </h2>
             </FadeIn>
 
-            <div className="grid md:grid-cols-4 gap-12">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 md:gap-12">
               {[
                 { step: "01", title: "Consulenza", desc: "Incontro per capire esigenze, misurare gli spazi e trovare la soluzione più adatta al tuo progetto." },
                 { step: "02", title: "Progettazione", desc: "I nostri artigiani sviluppano il progetto su misura: essenze, finiture e accessori scelti insieme a te." },
@@ -224,82 +209,79 @@ export default function InfissiPage() {
                 { step: "04", title: "Installazione", desc: "Il nostro team si occupa della posa professionale e garantisce assistenza post-vendita in tutta la Sardegna." },
               ].map((p, i) => (
                 <FadeIn key={i} delay={i * 0.12}>
-                  <div className="text-center">
-                    <div className="w-12 h-12 border border-black/20 rounded-full flex items-center justify-center mx-auto mb-6 text-sm font-light tracking-widest text-gray-500">
+                  <div className="text-center max-w-sm mx-auto">
+                    <div className="w-12 h-12 border border-black/20 rounded-full flex items-center justify-center mx-auto mb-5 md:mb-6 text-sm font-light tracking-widest text-gray-500">
                       {p.step}
                     </div>
-                    <h3 className="text-lg font-medium tracking-tight">{p.title}</h3>
-                    <p className="mt-4 text-gray-600 text-sm font-light leading-relaxed">{p.desc}</p>
+                    <h3 className="text-base md:text-lg font-medium tracking-tight">{p.title}</h3>
+                    <p className="mt-3 md:mt-4 text-gray-600 text-sm font-light leading-relaxed">{p.desc}</p>
                   </div>
                 </FadeIn>
               ))}
             </div>
-
           </div>
         </section>
 
-        {/* ── GALLERIA ── */}
-        <section className="py-44 px-6 border-t border-black/5">
+        {/* GALLERIA */}
+        <section className="py-20 md:py-44 px-6 border-t border-black/5">
           <div className="max-w-6xl mx-auto">
-
             <FadeIn>
-              <h2 className="text-4xl font-serif mb-20">
+              <h2 className="text-3xl md:text-4xl font-serif mb-14 md:mb-20">
                 Alcuni lavori
               </h2>
             </FadeIn>
 
-            <div className="grid md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {[
                 "Finestre minimaliste",
                 "Serramento a battente",
                 "Finestre scorrevoli",
               ].map((title, i) => (
                 <FadeIn key={i} delay={i * 0.15}>
-                  <div className="relative h-[360px] overflow-hidden rounded-xl group cursor-pointer">
-                    {/*
-                      → Sostituire con:
-                      <img src={`/images/infissi-lavoro-${i+1}.jpg`} className="w-full h-full object-cover transition duration-[1400ms] ease-out group-hover:scale-110 group-hover:-translate-y-2" alt={title} />
-                    */}
-                    <div className="w-full h-full bg-neutral-300 transition duration-[1400ms] ease-out group-hover:scale-110 group-hover:-translate-y-2">
+                  <div className="relative h-[300px] md:h-[360px] overflow-hidden rounded-xl group cursor-pointer">
+                    <div className="w-full h-full bg-neutral-300 transition duration-[1400ms] ease-out md:group-hover:scale-110 md:group-hover:-translate-y-2">
                       <ImgBox className="w-full h-full" />
                     </div>
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opacity-80 group-hover:opacity-100 transition duration-700"></div>
-                    <div className="absolute bottom-0 left-0 p-6 text-white">
-                      <h3 className="text-xl font-serif translate-y-4 group-hover:translate-y-0 transition duration-700 ease-out">{title}</h3>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opacity-80 md:opacity-80 md:group-hover:opacity-100 transition duration-700"></div>
+                    <div className="absolute bottom-0 left-0 p-5 md:p-6 text-white">
+                      <h3 className="text-xl font-serif translate-y-0 md:translate-y-4 md:group-hover:translate-y-0 transition duration-700 ease-out">
+                        {title}
+                      </h3>
                     </div>
                   </div>
                 </FadeIn>
               ))}
             </div>
-
           </div>
         </section>
 
-        {/* ── CTA ── */}
-        <section className="bg-[#0A0A0A] text-white py-44 text-center relative overflow-hidden">
+        {/* CTA */}
+        <section className="bg-[#0A0A0A] text-white py-24 md:py-44 text-center relative overflow-hidden">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.08),transparent_60%)]"></div>
           <FadeIn>
-            <h2 className="text-4xl font-serif">
+            <h2 className="text-3xl md:text-4xl font-serif">
               Vuoi un preventivo per le tue finestre?
             </h2>
-            <p className="mt-6 text-gray-400 font-light max-w-md mx-auto leading-relaxed">
+            <p className="mt-4 md:mt-6 text-gray-400 font-light max-w-md mx-auto leading-relaxed text-sm md:text-base">
               Consulenza gratuita. Misuriamo, progettiamo e installiamo
               le tue finestre in legno su misura in tutta la Sardegna.
             </p>
-            <div className="mt-10">
+            <div className="mt-8 md:mt-10">
               <MagneticButton>
-                <Link href="/contatti" className="relative inline-block overflow-hidden px-10 py-4 border border-white group">
-                  <span className="relative z-10 transition duration-500 group-hover:tracking-wide">Richiedi preventivo</span>
+                <Link href="/contatti" className="relative inline-block overflow-hidden px-8 md:px-10 py-3.5 md:py-4 border border-white group">
+                  <span className="relative z-10 transition duration-500 group-hover:tracking-wide">
+                    Richiedi preventivo
+                  </span>
                   <span className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition duration-700 ease-out"></span>
-                  <span className="absolute inset-0 flex items-center justify-center text-black opacity-0 group-hover:opacity-100 transition duration-500 z-10">Richiedi preventivo</span>
+                  <span className="absolute inset-0 flex items-center justify-center text-black opacity-0 group-hover:opacity-100 transition duration-500 z-10">
+                    Richiedi preventivo
+                  </span>
                 </Link>
               </MagneticButton>
             </div>
           </FadeIn>
         </section>
-
       </div>
-
     </main>
   );
 }
