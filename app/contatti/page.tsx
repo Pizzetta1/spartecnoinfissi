@@ -17,10 +17,22 @@ export default function ContattiPage() {
   const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
-    const lenis = new Lenis({ duration: 1.2, smoothWheel: true });
-    function raf(time: number) { lenis.raf(time); requestAnimationFrame(raf); }
-    requestAnimationFrame(raf);
-    return () => lenis.destroy();
+    const isMobile = window.innerWidth < 768;
+
+    let lenis: Lenis | null = null;
+
+    if (!isMobile) {
+      lenis = new Lenis({ duration: 1.2, smoothWheel: true });
+
+      function raf(time: number) {
+        lenis?.raf(time);
+        requestAnimationFrame(raf);
+      }
+
+      requestAnimationFrame(raf);
+    }
+
+    return () => lenis?.destroy();
   }, []);
 
   const handleSubmit = (e: FormEvent) => {
@@ -38,64 +50,53 @@ export default function ContattiPage() {
   const inputCls =
     "w-full border-b border-black/20 bg-transparent py-3 text-[#0A0A0A] placeholder-gray-400 text-sm font-light outline-none focus:border-black/60 transition-colors duration-300";
 
-  const labelCls = "block text-xs tracking-[0.2em] uppercase text-gray-500 mb-2";
+  const labelCls = "block text-[10px] md:text-xs tracking-[0.2em] uppercase text-gray-500 mb-2";
 
   return (
     <main className="flex flex-col text-[#0A0A0A] selection:bg-black selection:text-white">
-
       <Navbar />
 
-      {/* ════════════════════════════════════════
-          PAGE HERO
-      ════════════════════════════════════════ */}
-      <section className="relative h-screen overflow-hidden">
-
-        {/*
-          IMMAGINE HERO CONTATTI
-          → Sostituire questo <div> con:
-          <img src="/images/contatti-hero.jpg" className="w-full h-full object-cover" alt="Contattaci" />
-        */}
-        <div className="w-full h-full bg-neutral-800"></div>
+      {/* HERO */}
+      <section className="relative h-[100svh] md:h-screen overflow-hidden">
+        <img
+          src="/contattipage.png"
+          className="w-full h-full object-cover"
+          alt="Contattaci"
+        />
 
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/20 to-black/80"></div>
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.08),transparent_60%)]"></div>
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_40%,rgba(0,0,0,0.7))]"></div>
 
-        <div className="absolute inset-0 flex items-end pb-24 px-6 md:px-16 text-white">
+        <div className="absolute inset-0 flex items-end pb-14 md:pb-24 px-6 md:px-16 text-white">
           <FadeIn>
-            <p className="text-xs tracking-[0.3em] uppercase text-gray-400 mb-5">
+            <p className="text-[10px] md:text-xs tracking-[0.28em] md:tracking-[0.3em] uppercase text-gray-400 mb-4 md:mb-5">
               Parliamo insieme · SP.AR. Tecnoinfissi
             </p>
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif leading-[1.02] tracking-[-0.02em]">
+            <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-serif leading-[1.02] tracking-[-0.02em]">
               Contattaci
             </h1>
-            <p className="mt-8 text-lg md:text-xl text-gray-300 font-light tracking-[0.02em] max-w-2xl leading-relaxed">
+            <p className="mt-6 md:mt-8 text-base md:text-xl text-gray-300 font-light tracking-[0.02em] max-w-xl md:max-w-2xl leading-relaxed">
               Raccontaci il tuo progetto. Rispondiamo entro 24 ore per fissare
               una consulenza gratuita e senza impegno.
             </p>
           </FadeIn>
         </div>
-
       </section>
 
-      {/* ════════════════════════════════════════
-          CONTENUTO
-      ════════════════════════════════════════ */}
       <div className="relative z-20 bg-[#F5F5F5]">
-
-        {/* ── FORM + INFO ── */}
-        <section className="py-44 px-6 border-t border-black/5">
-          <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-20">
-
+        {/* FORM + INFO */}
+        <section className="py-20 md:py-44 px-6 border-t border-black/5">
+          <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-14 md:gap-20">
             {/* INFO */}
             <div>
               <FadeIn>
-                <h2 className="text-4xl font-serif mb-16 tracking-tight">
+                <h2 className="text-3xl md:text-4xl font-serif mb-10 md:mb-16 tracking-tight">
                   Siamo a Santu Lussurgiu
                 </h2>
               </FadeIn>
 
-              <div className="space-y-10">
+              <div className="space-y-7 md:space-y-10">
                 {[
                   {
                     label: "Indirizzo",
@@ -118,14 +119,16 @@ export default function ContattiPage() {
                     href: "https://wa.me/393514708713",
                   },
                 ].map((item, i) => (
-                  <FadeIn key={i} delay={i * 0.1}>
-                    <div className="border-b border-black/10 pb-8">
-                      <p className="text-xs tracking-[0.2em] uppercase text-gray-400 mb-2">{item.label}</p>
+                  <FadeIn key={i} delay={i * 0.08}>
+                    <div className="border-b border-black/10 pb-6 md:pb-8">
+                      <p className="text-[10px] md:text-xs tracking-[0.2em] uppercase text-gray-400 mb-2">
+                        {item.label}
+                      </p>
                       <a
                         href={item.href}
                         target={item.href.startsWith("http") ? "_blank" : undefined}
                         rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                        className="text-base font-light text-[#0A0A0A] hover:opacity-50 transition-opacity break-all"
+                        className="text-sm md:text-base font-light text-[#0A0A0A] hover:opacity-50 transition-opacity break-all"
                       >
                         {item.value}
                       </a>
@@ -134,11 +137,13 @@ export default function ContattiPage() {
                 ))}
               </div>
 
-              <FadeIn delay={0.4}>
-                <div className="mt-10 border-b border-black/10 pb-8">
-                  <p className="text-xs tracking-[0.2em] uppercase text-gray-400 mb-2">Orari</p>
-                  <p className="text-base font-light text-gray-600 leading-relaxed">
-                    Lunedì – Venerdì: 08:00 – 13:30 / 15:00 – 18:00<br />
+              <FadeIn delay={0.35}>
+                <div className="mt-7 md:mt-10 border-b border-black/10 pb-6 md:pb-8">
+                  <p className="text-[10px] md:text-xs tracking-[0.2em] uppercase text-gray-400 mb-2">
+                    Orari
+                  </p>
+                  <p className="text-sm md:text-base font-light text-gray-600 leading-relaxed">
+                    Lunedì – Venerdì: 08:00 – 13:30 / 15:00 – 18:00
                   </p>
                 </div>
               </FadeIn>
@@ -147,14 +152,16 @@ export default function ContattiPage() {
             {/* FORM */}
             <FadeIn delay={0.1}>
               {submitted ? (
-                <div className="flex flex-col items-center justify-center h-full text-center py-20">
-                  <div className="w-16 h-16 border border-black/20 rounded-full flex items-center justify-center mb-8">
+                <div className="flex flex-col items-center justify-center h-full text-center py-12 md:py-20">
+                  <div className="w-14 h-14 md:w-16 md:h-16 border border-black/20 rounded-full flex items-center justify-center mb-6 md:mb-8">
                     <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
                       <polyline points="20 6 9 17 4 12" />
                     </svg>
                   </div>
-                  <h3 className="text-2xl font-serif mb-4">Messaggio inviato!</h3>
-                  <p className="text-gray-500 font-light leading-relaxed max-w-sm">
+                  <h3 className="text-xl md:text-2xl font-serif mb-3 md:mb-4">
+                    Messaggio inviato!
+                  </h3>
+                  <p className="text-gray-500 font-light leading-relaxed max-w-sm text-sm md:text-base">
                     Grazie per averci contattato. Ti risponderemo entro 24 ore lavorative.
                   </p>
                   <button
@@ -162,15 +169,14 @@ export default function ContattiPage() {
                       setSubmitted(false);
                       setFormData({ nome: "", email: "", telefono: "", servizio: "", messaggio: "" });
                     }}
-                    className="mt-10 text-sm underline text-gray-500 hover:text-black transition"
+                    className="mt-8 md:mt-10 text-sm underline text-gray-500 hover:text-black transition"
                   >
                     Invia un altro messaggio
                   </button>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-10" noValidate>
-
-                  <div className="grid grid-cols-2 gap-8">
+                <form onSubmit={handleSubmit} className="space-y-8 md:space-y-10" noValidate>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div>
                       <label htmlFor="nome" className={labelCls}>
                         Nome *
@@ -185,6 +191,7 @@ export default function ContattiPage() {
                         onChange={(e) => setFormData((p) => ({ ...p, nome: e.target.value }))}
                       />
                     </div>
+
                     <div>
                       <label htmlFor="email" className={labelCls}>
                         Email *
@@ -201,7 +208,7 @@ export default function ContattiPage() {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-8">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div>
                       <label htmlFor="telefono" className={labelCls}>
                         Telefono
@@ -215,6 +222,7 @@ export default function ContattiPage() {
                         onChange={(e) => setFormData((p) => ({ ...p, telefono: e.target.value }))}
                       />
                     </div>
+
                     <div>
                       <label htmlFor="servizio" className={labelCls}>
                         Sono interessato a
@@ -231,8 +239,6 @@ export default function ContattiPage() {
                         <option value="Arredi su misura">Arredi su misura</option>
                         <option value="Pavimenti e rivestimenti">Pavimenti e rivestimenti</option>
                         <option value="Scale in legno">Scale in legno</option>
-                        <option value="Informazioni generali">Informazioni generali</option>
-                        <option value="Porte da interni">Porte da interni</option>
                         <option value="Infissi + Porte">Infissi + Porte</option>
                         <option value="Informazioni generali">Informazioni generali</option>
                       </select>
@@ -258,7 +264,7 @@ export default function ContattiPage() {
                     <MagneticButton>
                       <button
                         type="submit"
-                        className="relative overflow-hidden px-10 py-4 border border-black group"
+                        className="relative overflow-hidden px-8 md:px-10 py-3.5 md:py-4 border border-black group w-full md:w-auto"
                       >
                         <span className="relative z-10 text-sm transition duration-500 group-hover:tracking-wide group-hover:text-white">
                           Invia messaggio
@@ -266,22 +272,21 @@ export default function ContattiPage() {
                         <span className="absolute inset-0 bg-black translate-y-full group-hover:translate-y-0 transition duration-700 ease-out"></span>
                       </button>
                     </MagneticButton>
-                    <p className="mt-4 text-xs text-gray-400 font-light">
+
+                    <p className="mt-4 text-xs text-gray-400 font-light leading-relaxed">
                       I tuoi dati non vengono ceduti a terzi. Inviando accetti la privacy policy.
                     </p>
                   </div>
-
                 </form>
               )}
             </FadeIn>
-
           </div>
         </section>
 
-        {/* ── QUICK ACTIONS ── */}
-        <section className="py-32 px-6 border-t border-black/5">
+        {/* QUICK ACTIONS */}
+        <section className="py-16 md:py-32 px-6 border-t border-black/5">
           <div className="max-w-6xl mx-auto">
-            <div className="grid md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8">
               {[
                 {
                   icon: "📞",
@@ -305,27 +310,25 @@ export default function ContattiPage() {
                   label: "Apri su Maps",
                 },
               ].map((item, i) => (
-                <FadeIn key={i} delay={i * 0.1}>
+                <FadeIn key={i} delay={i * 0.08}>
                   <a
                     href={item.href}
                     target={item.href.startsWith("http") ? "_blank" : undefined}
                     rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                    className="group block border border-black/10 p-10 rounded-2xl bg-white/50 backdrop-blur-sm transition duration-500 hover:border-black/30 hover:-translate-y-1 text-center"
+                    className="group block border border-black/10 p-6 md:p-10 rounded-2xl bg-white/50 backdrop-blur-sm transition duration-500 hover:border-black/30 hover:-translate-y-1 text-center"
                   >
-                    <div className="text-3xl mb-4">{item.icon}</div>
-                    <h3 className="text-lg font-medium tracking-tight">{item.title}</h3>
+                    <div className="text-3xl mb-3 md:mb-4">{item.icon}</div>
+                    <h3 className="text-base md:text-lg font-medium tracking-tight">{item.title}</h3>
                     <p className="mt-2 text-gray-500 text-sm font-light">{item.desc}</p>
                     <p className="mt-4 text-sm font-light">{item.label}</p>
-                    <div className="mt-6 h-[1px] w-0 bg-black/80 mx-auto transition-all duration-700 ease-out group-hover:w-16"></div>
+                    <div className="mt-5 md:mt-6 h-[1px] w-0 bg-black/80 mx-auto transition-all duration-700 ease-out group-hover:w-16"></div>
                   </a>
                 </FadeIn>
               ))}
             </div>
           </div>
         </section>
-
       </div>
-
     </main>
   );
 }
