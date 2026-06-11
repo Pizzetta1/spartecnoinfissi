@@ -109,7 +109,7 @@ export default function BenessereOutdoorPage() {
         <img
           src="/outdoor.png"
           className="w-full h-full object-cover"
-          alt="Benessere & Outdoor"
+          alt="Benessere e Outdoor"
         />
 
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/20 to-black/80"></div>
@@ -119,12 +119,12 @@ export default function BenessereOutdoorPage() {
         <div className="absolute inset-0 flex items-end pb-14 md:pb-24 px-6 md:px-16 text-white">
           <FadeIn>
             <p className="text-[10px] md:text-xs tracking-[0.28em] md:tracking-[0.3em] uppercase text-gray-400 mb-4 md:mb-5">
-              Benessere & Outdoor · SP.AR. Tecnoinfissi
+              Benessere e Outdoor · SP.AR. Tecnoinfissi
             </p>
             <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-serif leading-[1.02] tracking-[-0.02em]">
               Benessere
               <br />
-              <span className="text-white/70">& Outdoor</span>
+              <span className="text-white/70">e Outdoor</span>
             </h1>
             <p className="mt-6 md:mt-8 text-base md:text-xl text-gray-300 font-light tracking-[0.02em] max-w-xl md:max-w-2xl leading-relaxed">
               Piscine idromassaggio, pergole bioclimatiche e vetrate panoramiche
@@ -216,7 +216,7 @@ export default function BenessereOutdoorPage() {
           <div className="max-w-6xl mx-auto">
             <FadeIn>
               <h2 className="text-3xl md:text-4xl font-serif mb-4 tracking-tight">
-                Perché scegliere Benessere & Outdoor
+                Perché scegliere Benessere e Outdoor
               </h2>
             </FadeIn>
             <FadeIn delay={0.1}>
