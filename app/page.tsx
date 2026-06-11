@@ -41,7 +41,16 @@ const rooms = [
     cta: "Scopri gli arredi",
   },
   {
-    number: "04",
+  number: "04",
+  title: "Benessere & Outdoor",
+  subtitle: "Piscine idromassaggio, pergole bioclimatiche e vetrate panoramiche",
+  desc: "Soluzioni su misura per vivere gli spazi esterni con comfort, design e funzionalità tutto l’anno.",
+  href: "/benessere-outdoor",
+  img: "/outdoor.png",
+  cta: "Scopri Benessere & Outdoor",
+},
+  {
+    number: "05",
     title: "Pavimenti e rivestimenti",
     subtitle: "Superfici che definiscono l'ambiente",
     desc: "Parquet, pavimenti resinati e rivestimenti in gres per ogni stile abitativo.",
@@ -50,7 +59,7 @@ const rooms = [
     cta: "Scopri i pavimenti",
   },
   {
-    number: "05",
+    number: "06",
     title: "Scale in legno",
     subtitle: "Elementi architettonici su misura",
     desc: "Scale a giorno, elicoidali e tradizionali realizzate interamente nel nostro laboratorio.",
@@ -119,14 +128,14 @@ function ShowroomSection() {
     offset: ["start start", "end end"],
   });
 
-  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-80%"]);
+  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-83.333%"]);
 
   return (
-    <div ref={containerRef} className="relative border-t border-black/5" style={{ height: "500vh" }}>
+    <div ref={containerRef} className="relative border-t border-black/5" style={{ height: "600vh" }}>
       <div className="sticky top-0 h-screen overflow-hidden bg-[#F5F5F5]">
-        <motion.div className="flex h-full" style={{ width: "500%", x }}>
+        <motion.div className="flex h-full" style={{ width: "600%", x }}>
           {rooms.map((room, i) => (
-            <div key={i} className="flex h-full" style={{ width: "20%" }}>
+            <div key={i} className="flex h-full" style={{ width: "16.6667%" }}>
               <div className="w-[55%] relative overflow-hidden">
                 <img
                   src={room.img}
