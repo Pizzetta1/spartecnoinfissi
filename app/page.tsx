@@ -42,7 +42,7 @@ const rooms = [
   },
   {
   number: "04",
-  title: "Benessere & Outdoor",
+  title: "Benessere e Outdoor",
   subtitle: "Piscine idromassaggio, pergole bioclimatiche e vetrate panoramiche",
   desc: "Soluzioni su misura per vivere gli spazi esterni con comfort, design e funzionalità tutto l’anno.",
   href: "/benessere-outdoor",
